@@ -76,7 +76,7 @@ class HomeController: UIViewController{
         actionButton.setDimensions(height: 56, width: 56)
         actionButton.layer.cornerRadius = 56 / 2
         actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                                paddingBottom: 16, paddingRight: 24)
+                                paddingBottom: 8, paddingRight: 24)
     }
     
     
