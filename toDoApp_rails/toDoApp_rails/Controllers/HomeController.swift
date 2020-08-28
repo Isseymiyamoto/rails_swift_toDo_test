@@ -34,7 +34,7 @@ class HomeController: UIViewController{
         super.viewDidLoad()
         
         configureUI()
-//        authenticateUser()
+        authenticateUser()
     }
     
     // MARK: - API

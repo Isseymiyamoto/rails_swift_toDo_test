@@ -19,7 +19,7 @@ struct AuthService {
     
     func createUser(credentials: RegistrationCredentials){
         // HTTP通信
-        let urlString = ""
+        let urlString = "https://rails-api-memo-test.herokuapp.com/memos"
         guard let url = URL(string: urlString) else { return }
         let headers: HTTPHeaders = [
             "Contenttype": "application/json"
@@ -29,11 +29,26 @@ struct AuthService {
             "password": credentials.password
         ]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
-            if let result = response.data {
-                print(result)
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                print(response.data)
+            case .failure(let error):
+                print("DEBUG: error is\(error)")
             }
         }
+        
+//        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: { (response) in
+//            switch response.result{
+//            case .success(_):
+//                if let data = response.data{
+//                    print(data)
+//                }
+//
+//            case .failure(let error):
+//                print("Error is \(error)")
+//            }
+//        })
     }
     
 }
