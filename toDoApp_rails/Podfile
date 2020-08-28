@@ -9,5 +9,6 @@ target 'toDoApp_rails' do
 
 pod 'Alamofire', '~> 5.2'
 pod'SwiftyJSON'
+pod 'JGProgressHUD','~>2.0.3'
 
 end
