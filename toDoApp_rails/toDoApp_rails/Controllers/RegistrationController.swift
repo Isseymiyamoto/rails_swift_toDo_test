@@ -81,7 +81,10 @@ class RegistrationController: UIViewController{
     }
     
     @objc func handleRegistration(){
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
         
+        let credentials = RegistrationCredentials(email: email, password: password)
     }
     
     @objc func textDidChange(sender: UITextField){

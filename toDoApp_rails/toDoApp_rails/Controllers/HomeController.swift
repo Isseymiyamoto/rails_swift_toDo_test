@@ -27,9 +27,6 @@ class HomeController: UIViewController{
         return button
     }()
     
-    
-    
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
