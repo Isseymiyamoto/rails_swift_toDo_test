@@ -84,7 +84,7 @@ class RegistrationController: UIViewController{
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
-        let credentials = RegistrationCredentials(email: email, password: password)
+        let credentials = AuthCredentials(email: email, password: password)
         
         AuthService.shared.createUser(credentials: credentials) { (response) in
             switch response.result{

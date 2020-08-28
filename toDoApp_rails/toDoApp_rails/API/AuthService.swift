@@ -11,7 +11,7 @@ import Alamofire
 import UIKit
 import SwiftyJSON
 
-struct RegistrationCredentials: Decodable{
+struct AuthCredentials: Decodable{
     let email: String
     let password: String
 }
@@ -19,7 +19,15 @@ struct RegistrationCredentials: Decodable{
 struct AuthService {
     static let shared = AuthService()
     
-    func createUser(credentials: RegistrationCredentials, completion: @escaping(AFDataResponse<Data>) -> Void){
+    func logUserIn(withEmail: String, password: String){
+        let urlString = "https://rails-api-memo-test.herokuapp.com/users"
+        guard let url = URL(string: urlString) else { return }
+        let headers: HTTPHeaders = [
+            "Contenttype": "authorization"
+        ]
+    }
+    
+    func createUser(credentials: AuthCredentials, completion: @escaping(AFDataResponse<Data>) -> Void){
         // HTTP通信
         let urlString = "https://rails-api-memo-test.herokuapp.com/users"
         guard let url = URL(string: urlString) else { return }
