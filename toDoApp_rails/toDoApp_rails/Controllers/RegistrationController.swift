@@ -11,6 +11,8 @@ import UIKit
 class RegistrationController: UIViewController{
     
     // MARK: - Properties
+    weak var delegate: AuthenticationDelegate?
+    private var viewModel = AuthViewModel()
     
     private let iconImage: UIImageView = {
         let iv = UIImageView()
@@ -82,6 +84,16 @@ class RegistrationController: UIViewController{
         
     }
     
+    @objc func textDidChange(sender: UITextField){
+        if sender == emailTextField{
+            viewModel.email = sender.text
+        }else {
+            viewModel.password = sender.text
+        }
+        
+        checkFormStatus()
+    }
+    
     // MARK: - Helpers
     
     func configureUI(){
@@ -111,8 +123,22 @@ class RegistrationController: UIViewController{
                                      paddingRight: 32)
         
         
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
-    
-    
-    
 }
+
+// MARK: - AuthenticationControllerProtocol
+
+extension RegistrationController: AuthenticationControllerProtocol{
+    func checkFormStatus(){
+        if viewModel.formIsValid {
+            signUpButton.isEnabled = true
+            signUpButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }else{
+            signUpButton.isEnabled = false
+            signUpButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+        }
+    }
+}
+
