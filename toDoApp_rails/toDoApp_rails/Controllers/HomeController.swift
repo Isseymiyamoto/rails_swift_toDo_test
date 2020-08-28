@@ -135,12 +135,6 @@ extension HomeController: UITableViewDelegate{
         return 64
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-
-        // 先にデータを削除しないと、エラーが発生します。
-        self.toDos.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -158,6 +152,27 @@ extension HomeController: UITableViewDataSource{
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
         cell.textLabel?.text = "\(indexPath.row + 1)  :  " + toDos[indexPath.row].memo
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete{
+            guard let id = toDos[indexPath.row].memoID as? Int else { return }
+            ToDoService.shared.deleteToDo(id: id) { (response) in
+                switch response.result{
+                case .success(_):
+                    self.toDos.remove(at: indexPath.row)
+                    self.tableView.reloadData()
+                case .failure(_):
+                    return
+                }
+            }
+        }
     }
 }
 
