@@ -166,6 +166,7 @@ extension HomeController: AuthenticationDelegate{
 
 extension HomeController: UploadControllerDelegate{
     func controller(_ controller: UploadToDoController) {
+        print("DEBUG: ここまできてる")
         controller.dismiss(animated: true, completion: nil)
         fetchToDos()
     }

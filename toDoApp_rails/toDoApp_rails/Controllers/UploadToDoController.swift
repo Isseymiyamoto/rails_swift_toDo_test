@@ -55,14 +55,24 @@ class UploadToDoController: UIViewController{
     @objc func handleUpload(){
         guard let memo = toDoTextView.text else { return }
         
-        ToDoService.shared.uploadToDo(memo: memo) { (error) in
-            if let error = error{
-                print("DEBUG: error is \(error.localizedDescription)")
-                return
+        ToDoService.shared.uploadToDo(memo: memo) { (response) in
+            switch response.result{
+            case .success(_):
+                print(response.result)
+                self.delegate?.controller(self)
+            case .failure(let error):
+                print(error)
             }
-            
-            self.delegate?.controller(self)
         }
+        
+//        ToDoService.shared.uploadToDo(memo: memo) { (error) in
+//            if let error = error{
+//                print("DEBUG: error is \(error.localizedDescription)")
+//                return
+//            }
+//
+//            self.delegate?.controller(self)
+//        }
     }
     
     // MARK: - Helpers
