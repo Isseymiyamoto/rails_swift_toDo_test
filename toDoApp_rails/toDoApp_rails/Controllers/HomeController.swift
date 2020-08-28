@@ -10,10 +10,12 @@ import UIKit
 
 private let reuseIdentifier = "cell"
 
-class HomeController: UITableViewController{
+class HomeController: UIViewController{
     
     // MARK: - Properties
     
+    private var user: User?
+    private let tableView = UITableView()
     private var toDos = [String]()
     
     private let actionButton: UIButton = {
@@ -22,8 +24,6 @@ class HomeController: UITableViewController{
         button.tintColor = .white
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.imageView?.setDimensions(height: 24, width: 24)
-        button.contentMode = .scaleAspectFit
-        button.clipsToBounds = true
         return button
     }()
     
@@ -35,12 +35,43 @@ class HomeController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureNavigationBar()
-        configureTableView()
+        configureUI()
+        authenticateUser()
     }
     
+    // MARK: - API
+    
+    func presentLoginScreen(){
+        DispatchQueue.main.async {
+            let controller = LoginController()
+            controller.delegate = self
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
+    func authenticateUser(){
+        // loginしていなかったらLoginControllerに飛ばす
+        if user == nil{
+            presentLoginScreen()
+        }
+    }
     
     // MARK: - Helpers
+    
+    func configureUI(){
+        navigationItem.title = "ToDo List"
+        
+        configureTableView()
+        
+        view.addSubview(actionButton)
+        actionButton.setDimensions(height: 56, width: 56)
+        actionButton.layer.cornerRadius = 56 / 2
+        actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                                paddingBottom: 16, paddingRight: 24)
+    }
+    
     
     func configureTableView(){
         
@@ -48,48 +79,53 @@ class HomeController: UITableViewController{
         tableView.rowHeight = 80
         tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        
-        view.addSubview(actionButton)
-        actionButton.setDimensions(height: 56, width: 56)
-        actionButton.layer.cornerRadius = 56 / 2
-        actionButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                                paddingBottom: 16, paddingRight: 24)
-        
+        view.addSubview(tableView)
+        tableView.frame = view.frame
     }
     
-    func configureNavigationBar(){
-        navigationItem.title = "ToDo List"
-    }
+  
+  
     
 }
 
 // MARK: - UITableViewDelegate
 
-extension HomeController{
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension HomeController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("DEBUG: \(indexPath.row)番目のToDoです")
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension HomeController{
-    override func numberOfSections(in tableView: UITableView) -> Int {
+extension HomeController: UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return toDos.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
         cell.textLabel?.text = toDos[indexPath.row]
         return cell
+    }
+}
+
+// MARK: - AuthenticationDelegate
+
+extension HomeController: AuthenticationDelegate{
+    func authenticationComplete() {
+        dismiss(animated: true, completion: nil)
+        configureUI()
     }
 }
