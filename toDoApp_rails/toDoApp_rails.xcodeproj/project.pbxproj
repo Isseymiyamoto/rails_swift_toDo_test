@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85A2E74D24F8941F0053DE80 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E74C24F8941F0053DE80 /* CustomTextField.swift */; };
 		85C382AE24F6A6C600BB7F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C382AD24F6A6C600BB7F3C /* AppDelegate.swift */; };
 		85C382B024F6A6C600BB7F3C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C382AF24F6A6C600BB7F3C /* SceneDelegate.swift */; };
 		85C382B524F6A6C600BB7F3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85C382B324F6A6C600BB7F3C /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		85A2E74C24F8941F0053DE80 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		85C382AA24F6A6C600BB7F3C /* toDoApp_rails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = toDoApp_rails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85C382AD24F6A6C600BB7F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85C382AF24F6A6C600BB7F3C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				85D6B9C624F6B08300AA2C9B /* InputContainerView.swift */,
+				85A2E74C24F8941F0053DE80 /* CustomTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A2E74D24F8941F0053DE80 /* CustomTextField.swift in Sources */,
 				85C382AE24F6A6C600BB7F3C /* AppDelegate.swift in Sources */,
 				85D6B9C724F6B08300AA2C9B /* InputContainerView.swift in Sources */,
 				85C382B024F6A6C600BB7F3C /* SceneDelegate.swift in Sources */,
