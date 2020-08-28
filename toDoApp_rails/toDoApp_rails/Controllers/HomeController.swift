@@ -108,6 +108,8 @@ class HomeController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.allowsMultipleSelectionDuringEditing = false
+        
         view.addSubview(tableView)
         tableView.frame = view.frame
         
@@ -132,6 +134,13 @@ extension HomeController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        // 先にデータを削除しないと、エラーが発生します。
+        self.toDos.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -147,7 +156,7 @@ extension HomeController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
-        cell.textLabel?.text = "\(toDos[indexPath.row].memoID)  :  " + toDos[indexPath.row].memo
+        cell.textLabel?.text = "\(indexPath.row + 1)  :  " + toDos[indexPath.row].memo
         return cell
     }
 }

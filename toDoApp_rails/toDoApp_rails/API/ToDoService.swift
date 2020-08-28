@@ -47,18 +47,6 @@ struct ToDoService {
             case .failure(let error):
                 print("DEBUG: error is \(error)")
             }
-            
-            
-//            if let data = response.data{
-//                for i in 0...data.count{
-//                    let memo = data[i]["text"]
-//                    let toDo = ToDo(memo: memo)
-//                    toDos.append(toDo)
-//                    completion(toDo)
-//                }
-//            }
-            
-            
         }
     }
     
@@ -77,5 +65,12 @@ struct ToDoService {
         ]
         
         AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: completion)
+    }
+    
+    func deleteToDo(id: Int, completion: @escaping(AFDataResponse<Any>) -> Void){
+        let urlString = "https://rails-api-memo-test.herokuapp.com/memos/\(id)"
+        guard let url = URL(string: urlString) else { return }
+        
+        AF.request(url, method: .delete, parameters: nil, headers: nil).responseJSON(completionHandler: completion)
     }
 }
