@@ -12,6 +12,27 @@ class RegistrationController: UIViewController{
     
     // MARK: - Properties
     
+    private let iconImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "pencil.and.outline")
+        iv.tintColor = .white
+        return iv
+    }()
+    
+    private let emailTextField = CustomTextField(placeholder: "Email")
+    
+    private let passwordTextField = CustomTextField(placeholder: "Password")
+    
+    private lazy var emailContainerView: UIView = {
+        let cv = InputContainerView(image: UIImage(systemName: "envelope"), textField: emailTextField)
+        return cv
+    }()
+    
+    private lazy var passwordContainerView: UIView = {
+        let cv = InputContainerView(image: UIImage(systemName: "lock"), textField: passwordTextField)
+        return cv
+    }()
+    
     private let signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -21,7 +42,8 @@ class RegistrationController: UIViewController{
         button.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
-        button.setHeight(height: 50)
+        button.setHeight(height: 48)
+        button.layer.cornerRadius = 6
         return button
     }()
     
@@ -65,6 +87,29 @@ class RegistrationController: UIViewController{
     func configureUI(){
         
         configureGradientLayer()
+        
+        view.addSubview(iconImage)
+        iconImage.centerX(inView: view)
+        iconImage.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
+        iconImage.setDimensions(height: 120, width: 120)
+        
+        let stack = UIStackView(arrangedSubviews: [emailContainerView,
+                                                   passwordContainerView,
+                                                   signUpButton])
+        stack.axis = .vertical
+        stack.spacing = 16
+        
+        view.addSubview(stack)
+        stack.anchor(top: iconImage.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                     paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.anchor(left: view.leftAnchor,
+                                     bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                     right: view.rightAnchor,
+                                     paddingLeft: 32,
+                                     paddingRight: 32)
+        
         
     }
     

@@ -8,9 +8,20 @@
 
 import UIKit
 
+protocol AuthenticationControllerProtocol {
+    func checkFormStatus()
+}
+
+protocol AuthenticationDelegate: class {
+    func authenticationComplete()
+}
+
 class LoginController: UIViewController{
     
     // MARK: - Properties
+    
+    weak var delegate: AuthenticationDelegate?
+    private var viewModel = AuthViewModel()
     
     private let iconImage: UIImageView = {
         let iv = UIImageView()
@@ -41,6 +52,8 @@ class LoginController: UIViewController{
         button.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
         button.setHeight(height: 48)
         button.layer.cornerRadius = 6
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.isEnabled = false
         return button
     }()
     
@@ -76,12 +89,22 @@ class LoginController: UIViewController{
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    @objc func handleLogin(){
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+    }
+    
+    @objc func textDidChange(sender: UITextField){
+        if sender == emailTextField{
+            viewModel.email = sender.text
+        }else {
+            viewModel.password = sender.text
+        }
+        
+        checkFormStatus()
+    }
     
     // MARK: - Helpers
-    
-    func configureContainerView(){
-        
-    }
     
     func configureUI(){
         
@@ -109,7 +132,23 @@ class LoginController: UIViewController{
                                      paddingLeft: 32,
                                      paddingRight: 32)
         
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         
     }
     
+}
+
+// MARK: - AuthenticationControllerProtocol{
+
+extension LoginController: AuthenticationControllerProtocol{
+    func checkFormStatus(){
+        if viewModel.formIsValid {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }else{
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+        }
+    }
 }
