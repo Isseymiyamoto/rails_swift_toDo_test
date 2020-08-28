@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import UIKit
+import SwiftyJSON
 
 struct RegistrationCredentials: Decodable{
     let email: String
@@ -17,7 +19,7 @@ struct RegistrationCredentials: Decodable{
 struct AuthService {
     static let shared = AuthService()
     
-    func createUser(credentials: RegistrationCredentials){
+    func createUser(credentials: RegistrationCredentials, completion: @escaping(AFDataResponse<Data>) -> Void){
         // HTTP通信
         let urlString = "https://rails-api-memo-test.herokuapp.com/users"
         guard let url = URL(string: urlString) else { return }
@@ -31,18 +33,35 @@ struct AuthService {
             ]
         ]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: { (response) in
-            switch response.result{
-            case .success(_):
-                if let data = response.data{
-                    print(data)
-                }
-
-            case .failure(let error):
-                print("Error is \(error)")
-            }
-        })
+        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: completion)
     }
+    
+//    func createUser(credentials: RegistrationCredentials){
+//        // HTTP通信
+//        let urlString = "https://rails-api-memo-test.herokuapp.com/users"
+//        guard let url = URL(string: urlString) else { return }
+//        let headers: HTTPHeaders = [
+//            "Contenttype": "application/json"
+//        ]
+//        let parameters: [String: Any] = [
+//            "user": [
+//                "email": credentials.email,
+//                "password": credentials.password
+//            ]
+//        ]
+//
+//        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: { (response) in
+//            switch response.result{
+//            case .success(_):
+//                if let data = response.data{
+//                    print(data)
+//                }
+//
+//            case .failure(let error):
+//                print("Error is \(error)")
+//            }
+//        })
+//    }
     
     func fetchUser(){
         

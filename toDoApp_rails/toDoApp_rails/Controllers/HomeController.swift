@@ -37,6 +37,7 @@ class HomeController: UIViewController{
         
         
         fetchToDos()
+        authenticateUser()
         configureUI()
 
     }

@@ -36,7 +36,7 @@ struct ToDoService {
                     let id = element["id"].int
                     let dictionary = [
                         "memo": memo,
-                        "memoID": id
+                        "memoID": id as Any
                         ] as [String : Any]
                     let toDo = ToDo(dictionary: dictionary)
                     toDos.append(toDo)

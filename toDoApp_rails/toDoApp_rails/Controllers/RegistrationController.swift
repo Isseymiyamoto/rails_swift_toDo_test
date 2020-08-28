@@ -86,7 +86,16 @@ class RegistrationController: UIViewController{
         
         let credentials = RegistrationCredentials(email: email, password: password)
         
-        AuthService.shared.createUser(credentials: credentials)
+        AuthService.shared.createUser(credentials: credentials) { (response) in
+            switch response.result{
+            case .success(_):
+                self.dismiss(animated: true, completion: nil)
+
+            case .failure(let error):
+                print("DEBUG: error is \(error)")
+                self.showError("登録できませんでした")
+            }
+        }
     }
     
     @objc func textDidChange(sender: UITextField){
