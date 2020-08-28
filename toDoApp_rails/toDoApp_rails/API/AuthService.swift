@@ -34,8 +34,6 @@ struct AuthService {
                 print(result)
             }
         }
-        
-        let test = URLCredential(user: credentials.user, password: credentials.password, persistence: .forSession)
     }
     
 }

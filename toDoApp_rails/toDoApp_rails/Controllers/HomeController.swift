@@ -24,6 +24,7 @@ class HomeController: UIViewController{
         button.tintColor = .white
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.imageView?.setDimensions(height: 24, width: 24)
+        button.addTarget(self, action: #selector(handleShowUpload), for: .touchUpInside)
         return button
     }()
     
@@ -33,7 +34,7 @@ class HomeController: UIViewController{
         super.viewDidLoad()
         
         configureUI()
-        authenticateUser()
+//        authenticateUser()
     }
     
     // MARK: - API
@@ -53,6 +54,15 @@ class HomeController: UIViewController{
         if user == nil{
             presentLoginScreen()
         }
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func handleShowUpload(){
+        let controller = UploadToDoController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true)
     }
     
     // MARK: - Helpers
