@@ -19,36 +19,43 @@ struct AuthService {
     
     func createUser(credentials: RegistrationCredentials){
         // HTTP通信
-        let urlString = "https://rails-api-memo-test.herokuapp.com/memos"
+        let urlString = "https://rails-api-memo-test.herokuapp.com/users"
         guard let url = URL(string: urlString) else { return }
         let headers: HTTPHeaders = [
             "Contenttype": "application/json"
         ]
         let parameters: [String: Any] = [
-            "email": credentials.email,
-            "password": credentials.password
+            "user": [
+                "email": credentials.email,
+                "password": credentials.password
+            ]
         ]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: { (response) in
             switch response.result{
-            case .success:
-                print(response.data)
+            case .success(_):
+                if let data = response.data{
+                    print(data)
+                }
+
             case .failure(let error):
-                print("DEBUG: error is\(error)")
+                print("Error is \(error)")
             }
+        })
+    }
+    
+    func fetchUser(){
+        
+        let urlString = "https://rails-api-memo-test.herokuapp.com/memos"
+        guard let url = URL(string: urlString) else { return }
+        let headers: HTTPHeaders = [
+            "Contenttype": "application/json"
+        ]
+        
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            print(response)
         }
         
-//        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: { (response) in
-//            switch response.result{
-//            case .success(_):
-//                if let data = response.data{
-//                    print(data)
-//                }
-//
-//            case .failure(let error):
-//                print("Error is \(error)")
-//            }
-//        })
     }
     
 }

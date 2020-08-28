@@ -16,7 +16,9 @@ class HomeController: UIViewController{
     
     private var user: User?
     private let tableView = UITableView()
-    private var toDos = [String]()
+    private var toDos = [ToDo](){
+        didSet{ tableView.reloadData() }
+    }
     
     private let actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -33,8 +35,10 @@ class HomeController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        fetchToDos()
         configureUI()
-        authenticateUser()
+
     }
     
     // MARK: - API
@@ -53,6 +57,12 @@ class HomeController: UIViewController{
         // loginしていなかったらLoginControllerに飛ばす
         if user == nil{
             presentLoginScreen()
+        }
+    }
+    
+    func fetchToDos(){
+        ToDoService.shared.fetchToDos { (toDos) in
+            self.toDos = toDos
         }
     }
     
@@ -123,7 +133,7 @@ extension HomeController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
-        cell.textLabel?.text = toDos[indexPath.row]
+        cell.textLabel?.text = toDos[indexPath.row].memo 
         return cell
     }
 }

@@ -28,6 +28,7 @@ class UploadToDoController: UIViewController{
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemGray
         button.isEnabled = false
+        button.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)
         return button
     }()
     
@@ -45,6 +46,11 @@ class UploadToDoController: UIViewController{
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func handleUpload(){
+        guard let memo = toDoTextView.text else { return }
+        
+        ToDoService.shared.u
+    }
     
     // MARK: - Helpers
     

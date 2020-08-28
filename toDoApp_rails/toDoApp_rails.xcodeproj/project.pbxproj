@@ -14,6 +14,8 @@
 		85A2E75324F8A68A0053DE80 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E75224F8A68A0053DE80 /* User.swift */; };
 		85A2E75524F8A79E0053DE80 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E75424F8A79E0053DE80 /* AuthService.swift */; };
 		85A2E75724F8B1E90053DE80 /* UploadToDoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E75624F8B1E90053DE80 /* UploadToDoController.swift */; };
+		85A2E75924F8D8A30053DE80 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E75824F8D8A30053DE80 /* ToDo.swift */; };
+		85A2E75B24F8D9320053DE80 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A2E75A24F8D9320053DE80 /* ToDoService.swift */; };
 		85C382AE24F6A6C600BB7F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C382AD24F6A6C600BB7F3C /* AppDelegate.swift */; };
 		85C382B024F6A6C600BB7F3C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C382AF24F6A6C600BB7F3C /* SceneDelegate.swift */; };
 		85C382B524F6A6C600BB7F3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85C382B324F6A6C600BB7F3C /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 		85A2E75224F8A68A0053DE80 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		85A2E75424F8A79E0053DE80 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		85A2E75624F8B1E90053DE80 /* UploadToDoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadToDoController.swift; sourceTree = "<group>"; };
+		85A2E75824F8D8A30053DE80 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
+		85A2E75A24F8D9320053DE80 /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 		85C382AA24F6A6C600BB7F3C /* toDoApp_rails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = toDoApp_rails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85C382AD24F6A6C600BB7F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85C382AF24F6A6C600BB7F3C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				85A2E75424F8A79E0053DE80 /* AuthService.swift */,
+				85A2E75A24F8D9320053DE80 /* ToDoService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				85A2E75224F8A68A0053DE80 /* User.swift */,
+				85A2E75824F8D8A30053DE80 /* ToDo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,10 +294,12 @@
 				85C382B024F6A6C600BB7F3C /* SceneDelegate.swift in Sources */,
 				85A2E74F24F89B0C0053DE80 /* AuthViewModel.swift in Sources */,
 				85A2E75524F8A79E0053DE80 /* AuthService.swift in Sources */,
+				85A2E75B24F8D9320053DE80 /* ToDoService.swift in Sources */,
 				85A2E75124F89F0E0053DE80 /* HomeController.swift in Sources */,
 				85C382C724F6A76F00BB7F3C /* Extensions.swift in Sources */,
 				85D6B9C424F6AC8700AA2C9B /* RegistrationController.swift in Sources */,
 				85A2E75324F8A68A0053DE80 /* User.swift in Sources */,
+				85A2E75924F8D8A30053DE80 /* ToDo.swift in Sources */,
 				85D6B9C224F6AC7000AA2C9B /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
