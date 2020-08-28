@@ -64,7 +64,7 @@ class HomeController: UIViewController{
         tableView.refreshControl?.beginRefreshing()
         
         ToDoService.shared.fetchToDos { (toDos) in
-            self.toDos = toDos
+            self.toDos = toDos.sorted(by: { $0.memoID < $1.memoID })
             
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -147,7 +147,7 @@ extension HomeController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
-        cell.textLabel?.text = toDos[indexPath.row].memo
+        cell.textLabel?.text = "\(toDos[indexPath.row].memoID)  :  " + toDos[indexPath.row].memo
         return cell
     }
 }

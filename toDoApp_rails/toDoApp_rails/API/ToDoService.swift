@@ -33,7 +33,12 @@ struct ToDoService {
                 
                 for element in tempArray{
                     let memo = element["text"].stringValue
-                    let toDo = ToDo(memo: memo)
+                    let id = element["id"].int
+                    let dictionary = [
+                        "memo": memo,
+                        "memoID": id
+                        ] as [String : Any]
+                    let toDo = ToDo(dictionary: dictionary)
                     toDos.append(toDo)
                     completion(toDos)
                 }
@@ -70,8 +75,6 @@ struct ToDoService {
                 "text": memo
             ]
         ]
-        
-        print("memo is \(memo)")
         
         AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler: completion)
     }

@@ -8,10 +8,20 @@
 
 import Foundation
 
+//struct ToDo {
+//    let memo: String
+//
+//    init(memo: String){
+//        self.memo = memo as? String ?? ""
+//    }
+//}
+
 struct ToDo {
     let memo: String
+    let memoID: Int
     
-    init(memo: String){
-        self.memo = memo as? String ?? ""
+    init(dictionary: [String: Any]){
+        self.memo = dictionary["memo"] as? String ?? ""
+        self.memoID = dictionary["memoID"] as? Int ?? 0
     }
 }
