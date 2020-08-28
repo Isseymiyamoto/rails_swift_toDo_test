@@ -55,7 +55,11 @@ class UploadToDoController: UIViewController{
     @objc func handleUpload(){
         guard let memo = toDoTextView.text else { return }
         
+        showLoader(true)
+        
         ToDoService.shared.uploadToDo(memo: memo) { (response) in
+            self.showLoader(false)
+            
             switch response.result{
             case .success(_):
                 print(response.result)
