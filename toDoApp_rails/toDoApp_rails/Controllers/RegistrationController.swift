@@ -85,6 +85,8 @@ class RegistrationController: UIViewController{
         guard let password = passwordTextField.text else { return }
         
         let credentials = RegistrationCredentials(email: email, password: password)
+        
+        AuthService.shared.createUser(credentials: credentials)
     }
     
     @objc func textDidChange(sender: UITextField){

@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Alamofire
 
-struct RegistrationCredentials{
+struct RegistrationCredentials: Decodable{
     let email: String
     let password: String
 }
@@ -16,8 +17,25 @@ struct RegistrationCredentials{
 struct AuthService {
     static let shared = AuthService()
     
-    func createUser(){
+    func createUser(credentials: RegistrationCredentials){
+        // HTTP通信
+        let urlString = ""
+        guard let url = URL(string: urlString) else { return }
+        let headers: HTTPHeaders = [
+            "Contenttype": "application/json"
+        ]
+        let parameters: [String: Any] = [
+            "email": credentials.email,
+            "password": credentials.password
+        ]
         
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            if let result = response.data {
+                print(result)
+            }
+        }
+        
+        let test = URLCredential(user: credentials.user, password: credentials.password, persistence: .forSession)
     }
     
 }
