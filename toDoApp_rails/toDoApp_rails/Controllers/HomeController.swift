@@ -61,8 +61,12 @@ class HomeController: UIViewController{
     }
     
     func fetchToDos(){
+        tableView.refreshControl?.beginRefreshing()
+        
         ToDoService.shared.fetchToDos { (toDos) in
             self.toDos = toDos
+            
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -70,9 +74,14 @@ class HomeController: UIViewController{
     
     @objc func handleShowUpload(){
         let controller = UploadToDoController()
+        controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         self.present(nav, animated: true)
+    }
+    
+    @objc func handleRefresh(){
+        fetchToDos()
     }
     
     // MARK: - Helpers
@@ -101,6 +110,11 @@ class HomeController: UIViewController{
         
         view.addSubview(tableView)
         tableView.frame = view.frame
+        
+        // refresh Control
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
   
@@ -133,7 +147,7 @@ extension HomeController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
-        cell.textLabel?.text = toDos[indexPath.row].memo 
+        cell.textLabel?.text = toDos[indexPath.row].memo
         return cell
     }
 }
@@ -144,5 +158,15 @@ extension HomeController: AuthenticationDelegate{
     func authenticationComplete() {
         dismiss(animated: true, completion: nil)
         configureUI()
+    }
+}
+
+
+// MARK: - UploadControllerDelegate
+
+extension HomeController: UploadControllerDelegate{
+    func controller(_ controller: UploadToDoController) {
+        controller.dismiss(animated: true, completion: nil)
+        fetchToDos()
     }
 }

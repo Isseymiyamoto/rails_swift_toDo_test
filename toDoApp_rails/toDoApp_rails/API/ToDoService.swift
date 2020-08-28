@@ -57,7 +57,24 @@ struct ToDoService {
         }
     }
     
-    func uploadToDo(memo: String){
+    func uploadToDo(memo: String, completion: @escaping(AFError?) -> Void){
+        // HTTP通信
+        let urlString = "https://rails-api-memo-test.herokuapp.com/memos"
+        guard let url = URL(string: urlString) else { return }
+        let headers: HTTPHeaders = [
+            "Contenttype": "application/json"
+        ]
+        let parameters: [String: Any] = [
+            "memo": memo
+        ]
         
+        print("memo is \(memo)")
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseData(completionHandler:  { (response) in
+            switch response.result{
+            case .success(_): print(response.result)
+            case .failure(let error): completion(error)
+            }
+        })
     }
 }

@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol UploadControllerDelegate: class{
+    func controller(_ controller: UploadToDoController)
+}
+
 class UploadToDoController: UIViewController{
     
     // MARK: - Properties
+    
+    weak var delegate: UploadControllerDelegate?
     
     private let toDoTextView: UITextView = {
         let tv = UITextView()
@@ -49,7 +55,14 @@ class UploadToDoController: UIViewController{
     @objc func handleUpload(){
         guard let memo = toDoTextView.text else { return }
         
-        ToDoService.shared.u
+        ToDoService.shared.uploadToDo(memo: memo) { (error) in
+            if let error = error{
+                print("DEBUG: error is \(error.localizedDescription)")
+                return
+            }
+            
+            self.delegate?.controller(self)
+        }
     }
     
     // MARK: - Helpers
